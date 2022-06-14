@@ -1,49 +1,28 @@
 package website;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Slf4j
+@SeleniumTest
+@ExtendWith(LoggingExtension.class)
 public class WebsiteTest {
 
-    WebDriver driver;
-
-    @BeforeAll
-    static void initWebDriverManager() {
-        WebDriverManager.chromedriver().setup();
-    }
-
-    @BeforeEach
-    void initDriver() {
-        ChromeOptions options = new ChromeOptions();
-        options.setExperimentalOption("excludeSwitches", List.of("enable-automation"));
-         driver = new ChromeDriver(options);
-        driver.get("https://www.python.org/");
-        driver.manage().window().maximize();
-    }
-
-    @AfterEach
-    void tearDown() {
-        driver.quit();
-    }
 
     @Test
-    void testSearch() {
+    void testSearch(WebDriver driver) {
 
 
         driver.findElement(By.id("id-search-field")).click();
         driver.findElement(By.id("id-search-field")).sendKeys("testing");
         driver.findElement(By.id("submit")).click();
+        log.debug("Click Go button");
 
 
         String result = driver.findElement(By.cssSelector("h3:nth-child(2)")).getText();
@@ -56,10 +35,10 @@ public class WebsiteTest {
     }
 
     @Test
-    void testPfs() {
+    void testPfs(WebDriver driver) {
 
         driver.findElement(By.linkText("PSF")).click();
-
+        log.debug("click on pdf menu item");
         String title = "Python Software Foundation";
 
 
