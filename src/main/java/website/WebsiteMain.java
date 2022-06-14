@@ -16,7 +16,7 @@ public class WebsiteMain {
         driver.findElement(By.id("id-search-field")).click();
         driver.findElement(By.id("id-search-field")).sendKeys("testing");
         driver.findElement(By.id("submit")).click();
-        
+
 
         String result = driver.findElement(By.cssSelector("h3:nth-child(2)")).getText();
 
